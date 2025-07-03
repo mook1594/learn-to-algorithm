@@ -4,6 +4,17 @@ namespace TestProject1
 {
     public class LeetCodeSolved
     {
+        [Theory(DisplayName = "3304. Find the K-th Character in String Game I")]
+        [InlineData(5, 'b')]
+        [InlineData(10, 'c')]
+        public void Test3304(int k, char expected)
+        {
+            Test03304 test = new Test03304();
+            char result = test.KthCharacter(k);
+
+            Assert.Equal(expected, result);
+        }
+
         [Theory(DisplayName = "3333. Find the Original Typed String II")]
         [InlineData("aabbccdd", 7, 5)]
         [InlineData("aabbccdd", 8, 1)]
