@@ -1,12 +1,12 @@
 ﻿
 namespace TestProject1
 {
-    internal class Test03333
+    internal class Test_03333
     {
         Dictionary<string, long> memo = new Dictionary<string, long>();
         private int[] minPossibleFromIndex;
         private int[] maxPossibleFromIndex;
-        public Test03333()
+        public Test_03333()
         {
         }
 
