@@ -1,9 +1,24 @@
 using LeetCode;
+using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
+using Xunit.Sdk;
 
 namespace TestProject1
 {
     public class LeetCodeSolved
     {
+        [Theory(DisplayName = "1353.Maximum Number of Events That Can Be Attended")]
+        [InlineData("[[1,2],[2,3],[3,4]]", 3)]
+        [InlineData("[[1,2],[2,3],[3,4],[1,2]]", 4)]
+        public void Test1353(string eventValue, int expected)
+        {
+            int[][] events = JsonConvert.DeserializeObject<int[][]>(eventValue);
+
+            Test_01353 test = new Test_01353();
+            int result = test.MaxEvents(events);
+            Assert.Equal(expected, result);
+        }
+
 
         [Theory(DisplayName = "3307. Find the K-th Character in String Game II")]
         [InlineData(2, new int[] { 0 }, 'a')]
