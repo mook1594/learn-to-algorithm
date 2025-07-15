@@ -7,9 +7,21 @@ namespace TestProject1
 {
     public class LeetCodeSolved
     {
+        [Theory(DisplayName = "3136. Valid Word")]
+        [InlineData("234Adas", true)]
+        [InlineData("b3", false)]
+        [InlineData("a3$e", false)]
+        public void Test3136(string word, bool expected)
+        {
+            Test_03136 test = new Test_03136();
+            bool result = test.IsValid(word);
+            Assert.Equal(expected, result);
+        }
+
         [Theory(DisplayName = "1353.Maximum Number of Events That Can Be Attended")]
         [InlineData("[[1,2],[2,3],[3,4]]", 3)]
         [InlineData("[[1,2],[2,3],[3,4],[1,2]]", 4)]
+        [InlineData("[[1,6],[1,2],[1,2],[3,4],[2,3],[3,4],[4,5]]", 6)]
         public void Test1353(string eventValue, int expected)
         {
             int[][] events = JsonConvert.DeserializeObject<int[][]>(eventValue);
