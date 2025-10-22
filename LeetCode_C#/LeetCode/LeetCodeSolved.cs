@@ -1,12 +1,17 @@
 using LeetCode;
 using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using Xunit.Sdk;
+using Xunit.Abstractions;
 
 namespace TestProject1
 {
     public class LeetCodeSolved
     {
+        private ITestOutputHelper _Output;
+        public LeetCodeSolved(ITestOutputHelper output)
+        {
+            _Output = output;
+        }
+
         [Theory(DisplayName = "3136. Valid Word")]
         [InlineData("234Adas", true)]
         [InlineData("b3", false)]
@@ -130,6 +135,48 @@ namespace TestProject1
             int result = test.FindLHS(nums);
 
             Assert.Equal(expected, result);
+        }
+
+        [Theory(DisplayName = "206. Reverse Linked List")]
+        [InlineData(new int[] { 1, 2, 3, 4, 5 }, new int[] { 5, 4, 3, 2, 1 })]
+        [InlineData(new int[] { 1, 2 }, new int[] { 2, 1 })]
+        [InlineData(new int[] { }, new int[] { })]
+        [InlineData(new int[] { 1 }, new int[] { 1 })]
+        public void Test206(int[] inputs, int[] expected)
+        {
+            Test_00206 test = new Test_00206();
+
+            ListNode? node = null;
+            ListNode? headNode = null;
+            ListNode? prevNode = null;
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                node = new ListNode()
+                {
+                    val = inputs[i],
+                    next = null
+                };
+                if (prevNode != null)
+                    prevNode.next = node;
+                else
+                    headNode = node;
+
+                prevNode = node;
+            }
+            _Output.WriteLine(JsonConvert.SerializeObject(headNode));
+            ListNode? result = test.ReverseList(headNode);
+
+            List<int> listResult = new List<int>();
+            _Output.WriteLine(JsonConvert.SerializeObject(listResult));
+
+            ListNode? head = result;
+            while (head != null)
+            {
+                listResult.Add(head.val);
+                head = head.next;
+            }
+
+            Assert.Equal(expected, listResult.ToArray());
         }
     }
 }
