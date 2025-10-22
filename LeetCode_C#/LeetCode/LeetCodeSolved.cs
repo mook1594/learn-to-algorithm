@@ -146,37 +146,32 @@ namespace TestProject1
         {
             Test_00206 test = new Test_00206();
 
-            ListNode? node = null;
-            ListNode? headNode = null;
-            ListNode? prevNode = null;
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                node = new ListNode()
-                {
-                    val = inputs[i],
-                    next = null
-                };
-                if (prevNode != null)
-                    prevNode.next = node;
-                else
-                    headNode = node;
-
-                prevNode = node;
-            }
+            ListNode? headNode = LinkedList.FromIntArray(inputs);
             _Output.WriteLine(JsonConvert.SerializeObject(headNode));
             ListNode? result = test.ReverseList(headNode);
 
-            List<int> listResult = new List<int>();
-            _Output.WriteLine(JsonConvert.SerializeObject(listResult));
+            int[] resultArray = LinkedList.ToIntArray(result);
+            _Output.WriteLine(JsonConvert.SerializeObject(resultArray));
 
-            ListNode? head = result;
-            while (head != null)
-            {
-                listResult.Add(head.val);
-                head = head.next;
-            }
+            Assert.Equal(expected, resultArray);
+        }
 
-            Assert.Equal(expected, listResult.ToArray());
+        [Theory(DisplayName = "2. Add Two Numbers")]
+        [InlineData(new int[]{ 2, 4, 3 }, new int[] { 5, 6, 4 }, new int[] { 7, 0, 8 } )]
+        [InlineData(new int[]{ 0 }, new int[] { 0 }, new int[] { 0 } )]
+        [InlineData(new int[] { 9, 9, 9, 9, 9, 9, 9 }, new int[] { 9, 9, 9, 9 }, new int[] { 8, 9, 9, 9, 0, 0, 0, 1 })]
+        [InlineData(new int[] { 9 }, new int[] { 1, 9, 9, 9, 9, 9, 9, 9, 9, 9 }, new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 })]
+        [InlineData(new int[] { 5, 6, 4 }, new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, new int[] { 6, 6, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 })]
+        
+        public void Test2(int[] inputs1, int[] inputs2, int[] expected)
+        {
+            ListNode? node1 = LinkedList.FromIntArray(inputs1);
+            ListNode? node2 = LinkedList.FromIntArray(inputs2);
+
+            Test_00002 test = new Test_00002();
+            ListNode result = test.AddTwoNumbers(node1, node2);
+            int[] resultArray = LinkedList.ToIntArray(result);
+            Assert.Equal(expected, resultArray);
         }
     }
 }
