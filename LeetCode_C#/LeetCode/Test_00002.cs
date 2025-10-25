@@ -3,45 +3,42 @@ using System.ComponentModel.DataAnnotations;
 namespace LeetCode;
 
 public class Test_00002 {
-    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
-        long num1 = ToInt(l1, 1);
-        long num2 = ToInt(l2, 1);
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+    {
+        ListNode c1 = l1;
+        ListNode c2 = l2;
 
-        long result = num1 + num2;
-        
-        long powIndex = 10;
-        
-        ListNode head = null;
-        ListNode prevNode = null;
-        while (result > 0)
-        {
-            long val = result - (result / powIndex * powIndex);
-            result -= val;
-            val = val / (powIndex / 10);
-            powIndex *= 10;
+        ListNode resultNode = null;
+        ListNode currentResult = null;
+        int carry = 0;
+        while(c1 != null || c2 != null){
+            int n1 = c1?.val ?? 0;
+            int n2 = c2?.val ?? 0;
+            int val = n1 + n2 + carry;
 
-            ListNode node = new ListNode((int)val);
-            if (head == null)
+            carry = 0;
+            if(val >= 10){
+                carry = 1;
+                val -= 10;
+            }
+            if (resultNode == null)
             {
-                head = node;
-                prevNode = node;
+                resultNode = new(val);
+                currentResult = resultNode;
             }
             else
             {
-                prevNode.next = node;
-                prevNode = prevNode.next;
+                currentResult.next = new(val);
+                currentResult = currentResult.next;
             }
+
+            c1 = c1?.next;
+            c2 = c2?.next;
         }
-        
-        return head ?? new ListNode();
-    }
+        if(carry == 1){
+            currentResult.next = new (carry);
+        }
 
-    public long ToInt(ListNode node, long digit){
-        if(node == null)
-            return 0;
-
-        long result = ToInt(node.next, digit * 10);
-
-        return result + (digit * node.val);
+        return resultNode ?? new ListNode();
     }
 }
